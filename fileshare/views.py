@@ -1,47 +1,150 @@
-# fileshare/views.py
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from .models import File
-from .serializers import FileSerializer
+from django.shortcuts import render, redirect
+from django.views.generic.list import ListView
+from .models import User, Post
+from django.http import HttpResponse
+from django.contrib import messages
 
-class FileViewSet(viewsets.ModelViewSet):
-    queryset = File.objects.all()
-    serializer_class = FileSerializer
+# Create your views here.
+class HomePageView(ListView):
+    def get(self, request):
+        '''
+        If user request get method in url direct than reach home page.
+        '''
+        all_posts = Post.objects.all().order_by('-id')
+        param = {'posts':all_posts}
+        return render(request, 'home.html', param)
 
-    @action(detail=False, methods=['post'])
-    @authentication_classes([TokenAuthentication])
-    @permission_classes([IsAuthenticated])
-    def upload_file(self, request):
-        serializer = FileSerializer(data={'file': request.FILES.get('file')})
+    def post(self, request):
+        '''
+        Create account system
+        '''
+        user_name = request.POST['uname']
+        pwd1 = request.POST['pwd1']
+        pwd2 = request.POST['pwd2']
+        print(user_name)
+        print(pwd1)
+        print(pwd2)
+        if pwd1 == pwd2:
+            add_user = User(username=user_name, password=pwd1)
+            add_user.save()
+            messages.success(request, 'Account has been created successfully.')
+            return redirect('home')
+        else:
+            messages.warning(request, 'Passwords are not same.')
+            return redirect('home')
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "File uploaded successfully"}, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['get'])
-    def download_file(self, request, pk=None):
-        file_instance = self.get_object()
 
-        if request.user != file_instance.user:
-            return Response({"message": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+# Create Upload File System
+class UploadView(ListView):
+    def get(self, request, user_name):
+        return render(request, 'upload_file.html')
 
-        special_url = file_instance.generate_special_url()
 
-        return Response({"download_link": special_url, "message": "success"})
+    def post(self, request, user_name):
+        filename = request.FILES['filename']
+        title = request.POST['title']
+        desc = request.POST['desc']
 
-    def extract_user_from_token(self, special_token):
+        user_obj = User.objects.get(username=user_name)
+        upload_post = Post(user=user_obj, title=title, file_field=filename, desc=desc)
+        upload_post.save()
+        messages.success(request, 'Your Post has been uploaded successfully.')
+        return render(request, 'upload_file.html')
+
+
+
+# View User Profile
+class ProfileView(ListView):
+    def get(self, request, user_name):
+        user_obj = User.objects.get(username=user_name)
+        user_posts = user_obj.post_set.all().order_by('-id')
+        param = {'user_data':user_obj, 'user_posts': user_posts}
+        return render(request, 'profile.html', param)
+
+
+# Post Delete View
+
+class DeleteView(ListView):
+    model = Post
+    def get(self, request, post_id):
+        user = request.session['user']
+        delete_post = self.model.objects.get(id=post_id)
+        delete_post.delete()
+        messages.success(request, 'Your post has been deleted successfully.')
+        return redirect(f'/profile/{user}')
+
+
+# Search View
+class SearchView(ListView):
+    def get(self, request):
+        query = request.GET['query']
+        search_users = User.objects.filter(username__icontains=query)
+        search_title = Post.objects.filter(title__icontains = query)
+        search_desc = Post.objects.filter(desc__icontains = query)
+        search_result = search_title.union(search_desc)
+        param = {'query':query, 'search_result':search_result, 'search_users':search_users}
+        return render(request, 'search.html', param)
+
+
+
+
+
+
+
+# Login System
+class LoginView(ListView):
+    def get(self, request):
+        return redirect('home')
+
+    def post(self, request):
+        user_name = request.POST['uname']
+        pwd = request.POST['pwd']
+
+        user_exists = User.objects.filter(username=user_name, password=pwd).exists()
+        if user_exists:
+            request.session['user'] = user_name
+            messages.success(request, 'You are logged in successfully.')
+            return redirect('home')
+        else:
+            messages.warning(request, 'Invalid Username or Password.')
+            return redirect('home')
+        return redirect('home')
+
+class LogoutView(ListView):
+    def get(self, request):
         try:
-            from django.core.signing import Signer
-            signer = Signer()
-            user = signer.unsign(special_token)
-            return user
-        except Exception as e:
-            return None
+            del request.session['user']
+        except:
+            return redirect('home') 
+        return redirect('home')
 
-    def extract_file_type(self, uploaded_file):
-        return uploaded_file.name.split('.')[-1].lower() if uploaded_file else ''
+
+
+
+#---------------------------------Test---------------------------------
+# from django.shortcuts import render
+# from django.contrib.auth.models import User
+# from django.contrib import messages
+# from .models import File
+
+
+# def test_func(request):
+#     print("test func called")
+
+#     if request.method == 'POST':
+#         user_name = request.POST.get('uname', '')  # Use get() to avoid MultiValueDictKeyError
+#         file = request.FILES.get('file', None)
+
+#         if user_name and file:
+#             usr=User.objects.get(username=user_name)
+#             instance = File.objects.create(user=usr, file=file)
+#             url = instance.generate_special_url()
+#             print(url)
+#             instance.save()
+#             messages.success(request, 'Account has been created successfully.')
+#         else:
+#             messages.error(request, 'Invalid form data.')
+
+#     return render(request, 'test.html')
