@@ -21,9 +21,9 @@ class HomePageView(ListView):
         user_name = request.POST['uname']
         pwd1 = request.POST['pwd1']
         pwd2 = request.POST['pwd2']
-        print(user_name)
-        print(pwd1)
-        print(pwd2)
+        # print(user_name)
+        # print(pwd1)
+        # print(pwd2)
         if pwd1 == pwd2:
             add_user = User(username=user_name, password=pwd1)
             add_user.save()
