@@ -2,10 +2,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from .models import User, Post
 from .serializers import UserSerializer, PostSerializer
 
 class UserListCreateAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -19,6 +24,9 @@ class UserListCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PostListCreateAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
