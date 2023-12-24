@@ -7,5 +7,6 @@ router = DefaultRouter()
 router.register(r'files', FileViewSet, basename='file')
 
 urlpatterns = [
+    path('login/', FileViewSet.as_view({'post': 'login'}), name='login'),
     path('', include(router.urls)),
 ]
