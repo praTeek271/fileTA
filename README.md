@@ -5,6 +5,7 @@ This Repo consists of the following files :
 - fileshare
 - fileTA
 - manage.py
+- README.md
 - response.json
 - response_users.json
 - templates
