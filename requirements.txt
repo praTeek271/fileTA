@@ -1,0 +1,14 @@
+asgiref
+dj-database-url
+Django
+djangorestframework
+djangorestframework-simplejwt
+gunicorn
+packaging
+PyJWT
+pytz
+rest-framework-simplejwt
+sqlparse
+typing_extensions
+tzdata
+whitenoise
