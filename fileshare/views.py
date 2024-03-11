@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from .models import User, Post
-from django.http import HttpResponse
 from django.contrib import messages
 
 # Create your views here.
