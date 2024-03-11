@@ -11,6 +11,7 @@ class HomePageView(ListView):
         If user request get method in url direct than reach home page.
         '''
         all_posts = Post.objects.all().order_by('-id')
+        # all_posts=Post.objects.filterby
         param = {'posts':all_posts}
         return render(request, 'home.html', param)
 
@@ -65,7 +66,6 @@ class ProfileView(ListView):
 
 
 # Post Delete View
-
 class DeleteView(ListView):
     model = Post
     def get(self, request, post_id):
@@ -80,11 +80,11 @@ class DeleteView(ListView):
 class SearchView(ListView):
     def get(self, request):
         query = request.GET['query']
-        search_users = User.objects.filter(username__icontains=query)
         search_title = Post.objects.filter(title__icontains = query)
         search_desc = Post.objects.filter(desc__icontains = query)
         search_result = search_title.union(search_desc)
-        param = {'query':query, 'search_result':search_result, 'search_users':search_users}
+
+        param = {'search_result':search_result,'query':query}
         return render(request, 'search.html', param)
 
 
@@ -93,7 +93,7 @@ class SearchView(ListView):
 
 
 
-# Login System
+# Login/LogOut System ---------------------------------------------------------
 class LoginView(ListView):
     def get(self, request):
         return redirect('home')
@@ -117,34 +117,7 @@ class LogoutView(ListView):
         try:
             del request.session['user']
         except:
-            return redirect('home') 
+            messages.warning(request,"Logging you out")
+            return redirect('home')
+        messages.warning(request,"Logged you out ....") 
         return redirect('home')
-
-
-
-
-#---------------------------------Test---------------------------------
-# from django.shortcuts import render
-# from django.contrib.auth.models import User
-# from django.contrib import messages
-# from .models import File
-
-
-# def test_func(request):
-#     print("test func called")
-
-#     if request.method == 'POST':
-#         user_name = request.POST.get('uname', '')  # Use get() to avoid MultiValueDictKeyError
-#         file = request.FILES.get('file', None)
-
-#         if user_name and file:
-#             usr=User.objects.get(username=user_name)
-#             instance = File.objects.create(user=usr, file=file)
-#             url = instance.generate_special_url()
-#             print(url)
-#             instance.save()
-#             messages.success(request, 'Account has been created successfully.')
-#         else:
-#             messages.error(request, 'Invalid form data.')
-
-#     return render(request, 'test.html')

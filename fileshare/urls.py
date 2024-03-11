@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/<str:user_name>', views.ProfileView.as_view(), name='profile'),
     path('delete/<int:post_id>', views.DeleteView.as_view(), name='delete'),
     path('search/', views.SearchView.as_view(), name='search'),
+    
     path('api/token/', obtain_auth_token, name='api-token'),
     path('api/users/', UserListCreateAPIView.as_view(), name='user-list-create'),
     path('api/posts/', PostListCreateAPIView.as_view(), name='post-list-create'),

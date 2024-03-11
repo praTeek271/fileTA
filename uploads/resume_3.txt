@@ -1,0 +1,80 @@
+Prateek Kumar Singh
+
+Noida
++919958195508
+prateekasme@gmail.com
+WWW: https://www.prateek271.me
+WWW: https://www.linkedin.com/in/prateek-kumar-singh-u78/
+WWW: https://github.com/praTeek271
+
+Professional Summary
+
+I'm a ambitious individual with a diverse skill set, I excel in software engineering, particularly in web development, algorithms, and machine learning. Driven by a passion for continuous learning, I am adept at quickly acquiring new skills and staying updated with industry trends. Currently seeking entry-level opportunities in Machine Learning, Data Engineering, and Python Development roles to apply my expertise and contribute to innovative projects. 
+
+Projects
+
+NavAi: Traffic Navigation Application - Developed traffic navigation application using Python, Machine Learning, and OpenMaps API.
+
+Analyzed real-time data to identify traffic patterns and optimize routes.
+
+Skills: Python, Machine Learning, Big Data, API Integration.
+
+      
+
+CodeBusters: College Platform for Students - Designed and implemented a comprehensive platform for student communication and collaboration.
+
+Integrated file storage and chat connectivity using Python and Django.
+
+Skills: Python, Django, API Integration, Communication.
+
+WebRTC-SDP-Handshake: Video Conference App - Built a WebRTC application for real-time video streaming and SDP offer exchange.
+
+Demonstrated proficiency in HTML, CSS, JavaScript, and WebRTC technology.
+
+Skills: WebRTC, HTML/CSS, JavaScript, Video Streaming.
+
+Skills
+
+Python (Pandas, PyTorch, NumPy, Scikit‑learn, Django, Flask .)
+HTML/CSS,
+JavaScript
+SQL
+AWS
+NodeJs
+
+Linux, Shell (Bash)
+Tableau
+Microsoft Office
+Firebase
+Git
+Soft Skills : Time Management, Teamwork, Problem-solving, Documentation, Engaging Presentation.
+
+Education
+
+August 2020
+Noida Institute of Engineering And Technology Greater Noida, India
+Bachelor of Technology Computer Science
+Current Courses: Data Science, Programming for Data Science, Knowledge Representation and Reasoning, Statistical Theory and Methods, Learning Skills through Case Studies, Artificial Intelligence, Machine Learning, Statistical Learning    
+7.78 GPA/CGPA 
+
+April 2018
+Ursuline Convent Senior Secondary School Gautam Buddha Greater Noida, India, India
+High School
+GPA: .88.7% 
+
+Work History
+
+June 2023 - August 2023
+
+Digital Heroes - Remote
+Backack End Software Engineer
+
+I had the job of studying the old code and creating work flows and flowchart for the senior developers to convert it and use it in their new code base 
+Automated and optimized the data handling process for project data flow, working with Ubuntu OS Shell, and other Linux tools. 
+
+Interests
+
+Cooking
+Linux 's user interface.
+Technical blog writing
+Video Games
