@@ -1,11 +1,14 @@
 # fileTA
 This Repo consists of the following files :
+- .env
 - .git
+- credintials.dat
 - db.sqlite3
 - fileshare
 - fileTA
 - manage.py
 - README.md
+- requirements.txt
 - response.json
 - response_users.json
 - templates
@@ -21,4 +24,4 @@ This Repo consists of the following files :
 <br>
 
 
-- uses threading module
+- uses time module
