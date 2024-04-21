@@ -26,4 +26,4 @@ This Repo consists of the following files :
 <br>
 
 
-- supports linux
+- uses selenium
