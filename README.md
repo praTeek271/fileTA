@@ -26,4 +26,4 @@ This Repo consists of the following files :
 <br>
 
 
-- uses github
+- hello world
